@@ -1,0 +1,136 @@
+/* GLOBAIS */
+:root {
+  --dark-blue: #363f5f;
+  --white: #fff;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: #f0f2f5;
+  font-family: 'Poppins', sans-serif;
+}
+
+.container {
+  width: min(90vw, 800px);
+  margin: auto;
+}
+
+h2 {
+  margin: 3.2rem 0 0.8rem;
+  color: var(--dark-blue);
+  font-weight: normal;
+}
+
+/* HEADER */
+
+header {
+  background: #2D4A22;
+  padding: 2rem 0 10rem;
+  text-align: center;
+}
+
+header h1 {
+  color: var(--white);
+  font-weight: 100;
+}
+
+/* BALANCE */
+section#balance {
+  margin-top: -8rem;
+}
+
+section#balance h2 {
+  color: var(--white);
+  margin-top: 0;
+}
+
+/* CARDS */
+div.card {
+  background: var(--white);
+  padding: 1.5rem 2rem;
+  border-radius: .25rem;
+
+  margin-bottom: 2rem;
+  color: var(--dark-blue);
+}
+
+div.card h3 {
+  font-weight: normal;
+  font-size: 1rem;
+}
+
+div.card p {
+  font-size: 2rem;
+  line-height: 3rem;
+  margin-top: 1rem;
+}
+
+div.card.total {
+  background: #49AA26;
+  color: var(--white);
+}
+/* TABLE */
+table#data-table {
+  width: 100%;
+  border-spacing: 0 0.5rem;
+  color: #969cb3;
+}
+
+table#data-table thead tr th:first-child,
+table#data-table tbody tr td:first-child{
+  border-radius: 0.25rem 0 0 0.25rem;
+}
+
+table#data-table thead tr th:last-child,
+table#data-table tbody tr td:last-child{
+  border-radius: 0 0.25rem 0.25rem 0;
+}
+
+table#data-table tbody tr {
+  opacity: 0.7;
+}
+table#data-table tbody tr:hover {
+  opacity: 1;
+}
+
+table#data-table th {
+  background: var(--white);
+  font-weight: normal;
+  padding: 1rem 2rem;
+  text-align: left;
+}
+
+table#data-table td {
+  background: var(--white);
+  padding: 1rem 2rem;
+}
+
+table#data-table td.description {
+  color: var(--dark-blue);
+}
+
+table#data-table td.expense {
+  color: #e92929
+}
+
+table#data-table td.income {
+  color: #12a454;
+}
+
+/* table#data-table td.date {
+
+} */
+
+/* FOOTER */
+footer {
+  text-align: center;
+  padding: 4rem 0 2rem;
+  color: var(--dark-blue);
+
+  opacity: 0.6;
+}
