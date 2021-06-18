@@ -1,10 +1,12 @@
 /* GLOBAIS */
 :root {
   --background: #f0f2f5;
-  --dark-grenn: #2D4A22;
+  --dark-green: #2D4A22;
   --dark-blue: #363f5f;
-  --total-grenn: #49AA26;
+  --green: #49AA26;
+  --light-green: #3dd705;
   --white: #fff;
+  --red: #e92929;
 }
 
 * {
@@ -46,13 +48,29 @@ h2 {
 }
 
 a {
-  color: var(--total-grenn);
+  color: var(--green);
   text-decoration: none;
   transition: all 0.1s;
 }
 
 a:hover {
-  color: #3dd705;
+  color: var(--light-green);
+}
+
+button {
+  width: 100%;
+  height: 50px;
+  border: none;
+  color: var(--white);
+  background: var(--green);
+  padding: 0;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  transition: all 0.1s;
+}
+
+button:hover {
+  background: var(--light-green);
 }
 
 .button.new {
@@ -60,10 +78,26 @@ a:hover {
   margin-bottom: 0.8rem;
 }
 
+.button.cancel {
+  color: var(--red);
+  border: 2px var(--red) solid;
+  border-radius: 0.25rem;
+  height: 50px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.6;
+}
+
+.button.cancel:hover {
+  opacity: 1;
+}
+
 /* HEADER */
 
 header {
-  background: var(--dark-grenn);
+  background: var(--dark-green);
   padding: 2rem 0 10rem;
   text-align: center;
 }
@@ -106,7 +140,7 @@ div.card p {
 }
 
 div.card.total {
-  background: var(--total-grenn);
+  background: var(--green);
   color: var(--white);
 }
 /* TABLE */
@@ -156,7 +190,7 @@ table td.description {
 }
 
 table td.expense {
-  color: #e92929
+  color: var(--red);
 }
 
 table td.income {
@@ -190,6 +224,8 @@ footer {
 
   opacity: 0;
   visibility: hidden;
+
+  z-index: 999;
 }
 
 .modal-overlay.active {
@@ -200,13 +236,45 @@ footer {
 .modal {
   background: var(--background);
   padding: 2.4rem;
+
   position: relative;
+  z-index: 1;
 }
 
-.modal-content {
-
+/* FORM */
+#form {
+  max-width: 500px;
 }
 
+#form h2 {
+  margin-top: 0;
+}
+
+input {
+  width: 100%;
+  border: none;
+  border-radius: 0.2rem;
+  padding: 0.8rem;
+}
+
+.input-group {
+  margin-top: 0.8rem;
+}
+
+.input-group small {
+  opacity: 0.4;
+}
+
+.input-group.actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.input-group.actions .button,
+.input-group.actions button {
+  width: 48%;
+}
 
 /* RESPONSIVE */
 
