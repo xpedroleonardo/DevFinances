@@ -1,143 +1,136 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dev.Finance$</title>
+    <link rel="stylesheet" href="./assets/css/styles.css" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,400;0,700;1,100;1,400;1,700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
 
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dev.Finance$</title>
-  <link rel="stylesheet" href="./assets/css/styles.css">
-  <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link
-    href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,400;0,700;1,100;1,400;1,700&display=swap"
-    rel="stylesheet">
-</head>
+  <body>
+    <header>
+      <img
+        src="assets/img/logo.svg"
+        alt="Logo Dev.Finances"
+        draggable="false"
+      />
+    </header>
 
-<body>
+    <main class="container">
+      <section id="balance">
+        <h2 class="sr-only">Balanço</h2>
 
-  <header>
-    <img src="assets/img/logo.svg" alt="Logo Dev.Finances" draggable="false">
-  </header>
+        <div class="card">
+          <h3>
+            <span>Entrada</span>
+            <img
+              src="assets/img/income.svg"
+              alt="Imagem de entradas"
+              draggable="false"
+            />
+          </h3>
+          <p>R$ 5.000,00</p>
+        </div>
 
-  <main class="container">
+        <div class="card">
+          <h3>
+            <span>Saída</span>
+            <img
+              src="assets/img/minus.svg"
+              alt="Imagem de saídas"
+              draggable="false"
+            />
+          </h3>
+          <p>R$ 2.000,00</p>
+        </div>
 
-    <section id="balance">
-      <h2 class="sr-only">Balanço</h2>
+        <div class="card total">
+          <h3>
+            <span>Total</span>
+            <img
+              src="assets/img/total.svg"
+              alt="Imagem de total"
+              draggable="false"
+            />
+          </h3>
+          <p>R$ 3.000,00</p>
+        </div>
+      </section>
 
-      <div class="card">
-        <h3>
-          <span>Entrada</span>
-          <img src="assets/img/income.svg" alt="Imagem de entradas" draggable="false">
-        </h3>
-        <p>R$ 5.000,00</p>
-      </div>
+      <section id="transaction">
+        <h2 class="sr-only">Transações</h2>
 
-      <div class="card">
-        <h3>
-          <span>Saída</span>
-          <img src="assets/img/minus.svg" alt="Imagem de saídas" draggable="false">
-        </h3>
-        <p>R$ 2.000,00</p>
-      </div>
+        <a href="#" onclick="toggle()" class="button new">+ Nova Transação</a>
 
-      <div class="card total">
-        <h3>
-          <span>Total</span>
-          <img src="assets/img/total.svg" alt="Imagem de total" draggable="false">
-        </h3>
-        <p>R$ 3.000,00</p>
-      </div>
+        <table>
+          <thead>
+            <tr>
+              <th>Descrição</th>
+              <th>Valor</th>
+              <th>Data</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </section>
+    </main>
 
-    </section>
+    <div class="modal-overlay">
+      <div class="modal">
+        <div id="form">
+          <h2>Nova Transação</h2>
 
-    <section id="transaction">
-      <h2 class="sr-only">Transações</h2>
+          <form action="">
+            <div class="input-group">
+              <label for="description" class="sr-only">Descrição</label>
+              <input
+                type="text"
+                id="description"
+                name="description"
+                placeholder="Descrição"
+              />
+            </div>
 
-      <a href="#" onclick="Modal.open()" class="button new">+ Nova Transação</a>
+            <div class="input-group">
+              <label for="amount" class="sr-only">Valor</label>
+              <input
+                type="number"
+                step="0.01"
+                id="amount"
+                name="amount"
+                placeholder="0,00"
+              />
+              <small class="help"
+                >Use o sinal - (negativo) para despesas e , (vírgula) para casas
+                decimais</small
+              >
+            </div>
 
-      <table>
-        <thead>
-          <tr>
-            <th>Descrição</th>
-            <th>Valor</th>
-            <th>Data</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
+            <div class="input-group">
+              <label for="date" class="sr-only">Data</label>
+              <input type="date" id="date" name="date" />
+            </div>
 
-          <tr>
-            <td class="description">Luz</td>
-            <td class="expense">- R$ 500,00</td>
-            <td class="date">11/06/2021</td>
-            <td>
-              <img src="assets/img/minus.svg" alt="Remover transação" draggable="false">
-            </td>
-          </tr>
-
-          <tr>
-            <td class="description">Criação Website</td>
-            <td class="income">R$ 5.000,00</td>
-            <td class="date">05/06/2021</td>
-            <td>
-              <img src="assets/img/minus.svg" alt="Remover transação" draggable="false">
-            </td>
-          </tr>
-
-          <tr>
-            <td class="description">Internet</td>
-            <td class="expense">- R$ 90,00</td>
-            <td class="date">15/06/2021</td>
-            <td>
-              <img src="assets/img/minus.svg" alt="Remover transação" draggable="false">
-            </td>
-          </tr>
-
-        </tbody>
-      </table>
-    </section>
-
-  </main>
-
-  <div class="modal-overlay">
-    <div class="modal">
-      <div id="form">
-        <h2>Nova Transação</h2>
-
-        <form action="">
-
-          <div class="input-group">
-            <label for="description" class="sr-only">Descrição</label>
-            <input type="text" id="description" name="description" placeholder="Descrição" />
-          </div>
-
-          <div class="input-group">
-            <label for="amount" class="sr-only">Valor</label>
-            <input type="number" step="0.01" id="amount" name="amount" placeholder="0,00" />
-            <small class="help">Use o sinal - (negativo) para despesas e , (vírgula) para casas decimais</small>
-          </div>
-
-          <div class="input-group">
-            <label for="date" class="sr-only">Data</label>
-            <input type="date" id="date" name="date" />
-          </div>
-
-          <div class="input-group actions">
-            <a href="#" onclick="Modal.close()" class="button cancel">Cancelar</a>
-            <button>Salvar</button>
-          </div>
-
-        </form>
-
+            <div class="input-group actions">
+              <a href="#" onclick="toggle()" class="button cancel">Cancelar</a>
+              <button>Salvar</button>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
-  </div>
 
-  <footer>
-    <p>DevFinance$</p>
-  </footer>
+    <footer>
+      <p>DevFinance$</p>
+    </footer>
 
-  <script src="assets/js/scripts.js"></script>
-</body>
-
+    <script src="assets/js/scripts.js"></script>
+  </body>
 </html>
