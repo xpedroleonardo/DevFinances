@@ -1,5 +1,6 @@
 const modal = document.querySelector(".modal-overlay").classList;
 const tbody = document.querySelector("tbody");
+
 function toggle() {
   if (modal.contains("active")) {
     modal.remove("active");
@@ -10,34 +11,54 @@ function toggle() {
 
 const transactions = [
   {
-    id: 1,
     description: "Luz",
-    amout: -50000,
+    amount: -50000,
     date: "01/01/2021",
   },
   {
-    id: 2,
     description: "Site",
-    amout: 500000,
+    amount: 500000,
     date: "05/04/2021",
   },
   {
-    id: 3,
     description: "Internet",
-    amout: -20000,
+    amount: -20000,
     date: "05/05/2021",
   },
 ];
 
 const Transaction = {
+  all: transactions,
+  add(transaction) {
+    this.all.push(transaction);
+    App.reload();
+  },
+  remove(index) {
+    this.all.splice(index, 1);
+    App.reload();
+  },
   income() {
-    // Entradas
+    let income = 0;
+    this.all.forEach(({ amount }) => {
+      if (amount > 0) {
+        income += amount;
+      }
+    });
+
+    return income;
   },
   expenses() {
-    // Saídas
+    let expense = 0;
+    this.all.forEach(({ amount }) => {
+      if (amount < 0) {
+        expense += amount;
+      }
+    });
+
+    return expense;
   },
   total() {
-    // Total restante
+    return this.income() + this.expenses();
   },
 };
 
@@ -62,13 +83,13 @@ const DOM = {
     tr.innerHTML = DOM.innerHTMLTransaction(transaction);
     tbody.appendChild(tr);
   },
-  innerHTMLTransaction({ description, date, amout }) {
-    const classCss = amout > 0 ? "income" : "expense";
-    amout = Utils.formatCurrency(amout);
+  innerHTMLTransaction({ description, date, amount }) {
+    const classCss = amount > 0 ? "income" : "expense";
+    amount = Utils.formatCurrency(amount);
 
     const html = `
       <td class="description">${description}</td>
-      <td class=${classCss}>${amout}</td>
+      <td class=${classCss}>${amount}</td>
       <td class="date">${date}</td>
       <td>
         <img
@@ -80,6 +101,38 @@ const DOM = {
 
     return html;
   },
+  updateBalance() {
+    document.getElementById("incomeDisplay").innerHTML = Utils.formatCurrency(
+      Transaction.income()
+    );
+    document.getElementById("expenseDisplay").innerHTML = Utils.formatCurrency(
+      Transaction.expenses()
+    );
+    document.getElementById("totalDisplay").innerHTML = Utils.formatCurrency(
+      Transaction.total()
+    );
+  },
+  clearTransactions() {
+    tbody.innerHTML = "";
+  },
 };
 
-transactions.forEach((transaction) => DOM.addTransaction(transaction));
+const Form = {
+  submit(event) {
+    event.preventDefault();
+    console.log("ola");
+  },
+};
+
+const App = {
+  init() {
+    Transaction.all.forEach((transaction) => DOM.addTransaction(transaction));
+    DOM.updateBalance();
+  },
+  reload() {
+    DOM.clearTransactions();
+    this.init();
+  },
+};
+
+App.init();
