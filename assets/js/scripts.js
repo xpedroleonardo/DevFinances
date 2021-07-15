@@ -9,26 +9,17 @@ function toggle() {
   }
 }
 
-const transactions = [
-  {
-    description: "Luz",
-    amount: -50000,
-    date: "01/01/2021",
+const Storage = {
+  get() {
+    return JSON.parse(localStorage.getItem("devfinance")) || [];
   },
-  {
-    description: "Site",
-    amount: 500000,
-    date: "05/04/2021",
+  set(transactions) {
+    localStorage.setItem("devfinance", JSON.stringify(transactions));
   },
-  {
-    description: "Internet",
-    amount: -20000,
-    date: "05/05/2021",
-  },
-];
+};
 
 const Transaction = {
-  all: transactions,
+  all: Storage.get(),
   add(transaction) {
     this.all.push(transaction);
     App.reload();
@@ -63,6 +54,14 @@ const Transaction = {
 };
 
 const Utils = {
+  formatAmount(value) {
+    value = value * 100;
+    return Math.round(value);
+  },
+  formatDate(date) {
+    const spliteDate = date.split("-");
+    return `${spliteDate[2]}/${spliteDate[1]}/${spliteDate[0]}`;
+  },
   formatCurrency(value) {
     const signal = Number(value) < 0 ? "-" : "";
     value = String(value).replace(/\D/g, "");
@@ -80,10 +79,12 @@ const Utils = {
 const DOM = {
   addTransaction(transaction, index) {
     const tr = document.createElement("tr");
-    tr.innerHTML = DOM.innerHTMLTransaction(transaction);
+    tr.innerHTML = DOM.innerHTMLTransaction(transaction, index);
+    tr.dataset.index = index;
+
     tbody.appendChild(tr);
   },
-  innerHTMLTransaction({ description, date, amount }) {
+  innerHTMLTransaction({ description, date, amount }, index) {
     const classCss = amount > 0 ? "income" : "expense";
     amount = Utils.formatCurrency(amount);
 
@@ -93,6 +94,7 @@ const DOM = {
       <td class="date">${date}</td>
       <td>
         <img
+          onclick="Transaction.remove(${index})"
           src="assets/img/minus.svg"
           alt="Remover transação"
           draggable="false"
@@ -118,16 +120,63 @@ const DOM = {
 };
 
 const Form = {
+  description: document.querySelector("input#description"),
+  amount: document.querySelector("input#amount"),
+  date: document.querySelector("input#date"),
+  getValues() {
+    return {
+      description: this.description.value,
+      amount: this.amount.value,
+      date: this.date.value,
+    };
+  },
+  formatData() {
+    let { description, amount, date } = this.getValues();
+
+    amount = Utils.formatAmount(amount);
+    date = Utils.formatDate(date);
+
+    return {
+      description,
+      amount,
+      date,
+    };
+  },
+  validateFields() {
+    const { description, amount, date } = this.getValues();
+
+    if (
+      description.trim() === "" ||
+      amount.trim() === "" ||
+      date.trim() === ""
+    ) {
+      throw new Error("Preencha todos os campos");
+    }
+  },
+  clearFields() {
+    this.description.value = "";
+    this.amount.value = "";
+    this.date.value = "";
+  },
   submit(event) {
     event.preventDefault();
-    console.log("ola");
+    try {
+      this.validateFields();
+      const transaction = this.formatData();
+      Transaction.add(transaction);
+      this.clearFields();
+      toggle();
+    } catch (error) {
+      alert(error.message);
+    }
   },
 };
 
 const App = {
   init() {
-    Transaction.all.forEach((transaction) => DOM.addTransaction(transaction));
+    Transaction.all.forEach(DOM.addTransaction);
     DOM.updateBalance();
+    Storage.set(Transaction.all);
   },
   reload() {
     DOM.clearTransactions();
